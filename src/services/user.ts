@@ -1,6 +1,8 @@
-import fs from 'fs'
+import dotenv from 'dotenv'
 import * as UserModel from '../models/user.js'
 import { removePrevAvatar } from '../middlewares/upload.js'
+
+dotenv.config()
 
 class UserService {
   async getAll() {
