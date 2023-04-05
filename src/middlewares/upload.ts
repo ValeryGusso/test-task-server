@@ -1,6 +1,7 @@
 import multer from 'multer'
 import fs from 'fs'
 import { NextFunction, Request, Response } from 'express'
+import { randomName } from '../utils/randomName.js'
 
 const storage = multer.diskStorage({
   destination: (_, __, callback) => {
@@ -9,8 +10,13 @@ const storage = multer.diskStorage({
     }
     callback(null, './uploads')
   },
-  filename: (_, file, callback) => {
-    callback(null, file.originalname)
+  filename: (req, file, callback) => {
+    const extansion = file.originalname.match(/\.jpg|jpeg|png|gif|webp|svg|ico/i)
+    if (extansion) {
+      const newName = randomName(10) + extansion
+      req.body.newFileName = newName
+      callback(null, newName)
+    }
   },
 })
 
@@ -28,7 +34,7 @@ export async function uploadImage(req: Request, res: Response, next: NextFunctio
       })
     })
   } catch (err: any) {
-    throw new Error(err.message)
+    return res.status(500).json({ message: err.message })
   }
 }
 

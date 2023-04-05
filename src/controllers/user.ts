@@ -34,10 +34,9 @@ class UserController {
       }
       const id = req.user.id
 
-      const { name, about } = req.body
-      const filename = req.file?.filename
+      const { name, about, newFileName } = req.body
 
-      const user = await UserService.updateUser(id, filename, name, about)
+      const user = await UserService.updateUser(id, newFileName, name, about)
 
       return res.json({ success: true, user })
     } catch (err: any) {
