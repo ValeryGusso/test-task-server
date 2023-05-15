@@ -31,6 +31,11 @@ app.use(
   }),
 )
 
+/* FEATURE FOR "RENDER" FREE PLAN TO UP THE SERVER */
+app.get('/wakeup', (_, res) => {
+  return res.json({ message: 'Im alive!', success: true })
+})
+
 app.get('/auth/me', checkAuth, AuthController.getMe)
 app.get('/auth/logout', checkAuth, AuthController.logout)
 app.get('/auth/refresh', AuthController.refresh)
